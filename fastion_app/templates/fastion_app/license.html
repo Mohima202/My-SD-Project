@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Agreements</title>
+   <link rel="icon" type="image/png" href="{% static 'fastion_app/pic/R.jpg' %}">
+  <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+  <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+   <!-- CATEGORY JS-->
+   <script>
+    function navigate() {
+      var select = document.getElementById('category');
+      var url = select.options[select.selectedIndex].value;
+      window.location.href = url;
+    }
+  </script>
+      <script>
+        window.onscroll = function()
+        {
+          var menu = document.getElementById("menu");
+          if (window.scrollY > 0)
+        {
+          menu.style.position = "sticky";
+          menu.style.top = "0px";
+          menu.style.opacity = ".9";
+          menu.style.zIndex="3";
+        }
+        else
+        {menu.style.position = "static";
+          menu.style.opacity = "1";
+        }
+        }
+      </script>
+  </head> <!--header-->
+  <body>
+
+    <div class="header">
+        <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+       
+        <input class="search-container" type="search" class="search-box" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;" >
+    </div><hr>
+
+<!--MENU-->
+   <div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+      <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+      <div class="dropdown">
+        <button class="dropdown-btn">CATEGORIES</button>|
+        <div class="dropdown-content">
+          <div class="submenu">
+            <a>Women</a>
+            <div class="submenu-content">
+              <a href="{% url 'onepiece' %}">One Piece</a>
+              <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+              <a href="{% url 'saree' %}">Saree</a>
+            </div>
+          </div>
+          <a href="{% url 'men1' %}">Men</a>
+          <div class="submenu">
+            <a>Kids</a>
+             <div class="submenu-content">
+                        <a href="{% url 'babyboy' %}">Baby boy</a>
+                        <a href="{% url 'babygirl' %}">Baby girl</a>
+                    
+                    </div>
+                </div>
+                <a href="{% url 'accessories' %}">Accessories</a>
+                <div class="submenu">
+                <a>Wedding</a>
+                <div class="submenu-content">
+                  <a href="{% url 'groom' %}">Groom</a>
+                  <a href="{% url 'bride' %}">Bride</a>
+              
+              </div>
+          </div>
+                <a href="{% url 'shoes' %}">Shoes</a>
+                <a href="{% url 'bag' %}">Bag</a>
+            </div>
+           </div>
+     <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+          <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+          {% if user.is_authenticated %}
+          <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+              <p style="color: #ffffff; margin:0;">LOGOUT</p>
+            </button>
+          </form>|
+        {% else %}
+          <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+            <p style="color: #ffffff;">LOGIN</p>
+          </button>|
+        {% endif %}
+        <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+          <p style="color: #ffffff; "><span style="font-size: 18px;">🛒</span>
+            MY CART<span  id="cart-count" style="font-size: 14px; color: yellow;">({{ total_items }})</span></p></button>
+                 </div>
+    </div>
+  </div>
+
+    
+<br><br>
+<h3 style="justify-self: center; font-style: italic ; font-size: 25px;">---------  License Agreements  ---------</h3>
+<br>
+
+<p style="width: 55%; font-size: 15px; justify-self: center;">
+    Exchange Policy
+    Renabelle's exchange policy allows you to exchange any Renabelle product purchased online within 15 days of receipt, free of charge. Simply ensure the product is unused and maintain its original condition, tags, and packaging. Exchanges are subject to stock availability.
+
+To initiate an exchange, contact our Customer Services Department at renabellecustomerservice@beximtex.com. If you opt for an exchange, return the full parcel to our online store and notify our customer service team. We'll promptly process your request and resend the full order.
+
+You can also exchange products at any Renabelle store. <br>
+
+Please note:
+<br>
+Products purchased on discounts/special offers cannot be exchanged or refunded.
+No exchanges for Pajama, Leggings, Dupatta or Scarves, Innerwear, Home products, and Accessories.
+Monetary refunds are not available.
+                                      
+<br>
+অনলাইনে কেনা Renabelle যেকোনো প্রোডাক্ট ক্রয়ের ১৫ দিনের মধ্যে সম্পূর্ণ বিনামূল্যে পরিবর্তন করা যাবে। এক্ষেত্রে, প্রোডাক্টটি অব্যবহৃত অবস্থায় ট্যাগ সহ মূল প্যাকেজিংয়ে রাখতে হবে এবং সাথে ক্রয়ের প্রমাণ হিসেবে রসিদটিও থাকতে হবে। সকল প্রোডাক্ট পরিবর্তন স্টক-লভ্যতার ওপর নির্ভরশীল।
+
+
+ক্রয়কৃত প্রোডাক্ট পরিবর্তন করতে চাইলে আমাদের কাস্টমার সার্ভিস বিভাগে (renabellecustomerservice@beximtex.com) যোগাযোগ করুন এবং সম্পূর্ণ পার্সেলটি ইয়েলো অনলাইন স্টোরের ঠিকানায় পাঠিয়ে দিন। আমরা আপনার অর্ডারটি পরিবর্তন করে পুনরায় আপনার ঠিকানায় পাঠিয়ে দেব।
+
+আপনি চাইলে, যেকোনো ইয়েলো স্টোর থেকেও প্রোডাক্ট পরিবর্তন করতে পারেন।<br>
+
+উল্লেখ্য:
+<br>
+কোনো ছাড় বা বিশেষ-অফারের প্রোডাক্ট পরিবর্তনযোগ্য নয়।
+পায়জামা, লেগিংস, দুপাট্টা, স্কার্ফ, আন্ডারগার্মেন্ট, হোম প্রোডাক্ট ও এক্সেসরি পরিবর্তনযোগ্য নয়।
+ক্রয়কৃত প্রোডাক্টের বিনিময়ে কোনো আর্থিক মূল্য অফেরতযোগ্য।
+</p>
+
+<div><br><br><br>
+    <div style="display: flex; align-items: center; justify-content:space-between; background-color: #00000021; padding-top: 25px; padding-bottom: 25px;">
+      <div style="padding-left: 5%;"><iframe width="560" height="315" src="https://www.youtube.com/embed/CQu4VkZ3Wj4?si=dEHscQZ-5i055O5d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div style="font-size: 45px; padding-right: 10%; background-color: #00000021; height: 315;">OUR LATEST SHOW</div>
+
+   </div>
+    <hr>
+    <!-- FOOTER -->
+<div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER </p></div>
+    <div><input type="email" placeholder="Enter email..." style="width: 300px; height: 35px; margin-left: 40px;"></div>
+    
+</div>
+<div class="footerbox" style="">
+  <div class="footer" >
+    
+    <div>
+      <ul type="none";>
+         <li class="list-header">CLIENT SERVICES</li>
+        <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+        <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+        <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+        <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+        
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+      <li class="list-header">LEGAL & PRIVACY</li>
+        <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+        <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+        <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+        <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+       <li class="list-header">CORPORATE</li>
+      <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+      <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+      <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+    </ul>
+    </div>
+
+  </div>
+  <div style="justify-self: end;">
+    <a href="https://www.facebook.com/BRAC.AARONG"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt="" style=""></a>
+    <a href="https://www.instagram.com/brac.aarong"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt="" style="" ></a>
+    <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt="" style="" ></a>
+    
+    </div>
+</div>
+<hr>
+<div class="credits"><p >© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p></div>
+</div>
+
+
+   
+</body>
+</html>

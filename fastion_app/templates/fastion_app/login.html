@@ -1,0 +1,118 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="{% static 'fastion_app\wedpic\R.png' %}">
+    <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            width: 100%;
+        }
+        .login-container {
+            position: relative;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-btn:hover {
+            background-color: #218838;
+        }
+        .signup-note {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .signup-note a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .signup-note a:hover {
+            text-decoration: underline;
+        }
+        .backArrow{
+            border-radius: 50%;
+            width: 40px;
+            display: flex;
+            position: absolute;
+            left:-50px;
+            top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <img src="{% static 'fastion_app/pic/logh.jpg' %}" alt="" style="left:0%; filter: brightness(50%); position: absolute; width: 100%; height: 100%; z-index: -1; filter: blur(5px);">
+    <div justify-self: center; style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style=" background-color: rgb(254, 241, 225); border-radius: 30vh; padding-inline: 20px; border-width: 2px; box-shadow: #ff0202; border-color: #ccc;"><h2> Please Log In to continue shopping </h2></div>
+    <div style="padding-top: 10%; margin-top: -100px;">
+        <div class="login-container" style="justify-self: center;">
+            <div>
+                <img class="backArrow" src="{% static 'fastion_app/pic/arrow.png' %}" alt="" onclick="window.location.href='{% url 'home' %}'">
+            </div>
+            <h2>Login</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color:red;">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="phone">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <p class="signup-note">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,567 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renabelle Bride</title>
+   <link rel="icon" type="image/png" href="{% static 'fastion_app\wedpic\R.png' %}">
+  <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+  <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  </head> <!--header-->
+  <body>
+
+       <!-- CATEGORY JS-->
+
+   <script>
+    function navigate() {
+      var select = document.getElementById('category');
+      var url = select.options[select.selectedIndex].value;
+      window.location.href = url;
+    }
+  </script>
+      <script>
+        window.onscroll = function()
+        {
+          var menu = document.getElementById("menu");
+          if (window.scrollY > 0)
+        {
+          menu.style.position = "sticky";
+          menu.style.top = "0px";
+          menu.style.opacity = ".9";
+          menu.style.height = "6%";
+          menu.style.zIndex="3";
+        }
+        else
+        {menu.style.position = "static";
+          menu.style.opacity = "1";
+        }
+        }
+      </script> 
+      <script src="server.js"> </script>
+    <div class="header">
+       <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+       
+        <input class="search-container" type="search" class="search-box" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;" >
+    </div><hr>
+
+<!--MENU-->
+   <div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+      <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+      <div class="dropdown">
+        <button class="dropdown-btn">CATEGORIES</button>|
+        <div class="dropdown-content">
+          <div class="submenu">
+            <a>Women</a>
+            <div class="submenu-content">
+              <a href="{% url 'onepiece' %}">One Piece</a>
+              <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+              <a href="{% url 'saree' %}">Saree</a>
+            </div>
+          </div>
+          <a href="{% url 'men1' %}">Men</a>
+          <div class="submenu">
+            <a>Kids</a>
+             <div class="submenu-content">
+                        <a href="{% url 'babyboy' %}">Baby boy</a>
+                        <a href="{% url 'babygirl' %}">Baby girl</a>
+                    
+                    </div>
+                </div>
+                <a href="{% url 'accessories' %}l">Accessories</a>
+                <div class="submenu">
+                <a>Wedding</a>
+                <div class="submenu-content">
+                  <a href="{% url 'groom' %}">Groom</a>
+                  <a href="{% url 'bride' %}">Bride</a>
+              
+              </div>
+          </div>
+                <a href="{% url 'shoes' %}">Shoes</a>
+                <a href="{% url 'bag' %}">Bag</a>
+            </div>
+           </div>
+        <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+          <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+          {% if user.is_authenticated %}
+          <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+              <p style="color: #ffffff; margin:0;">LOGOUT</p>
+            </button>
+          </form>|
+        {% else %}
+          <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+            <p style="color: #ffffff;">LOGIN</p>
+          </button>|
+        {% endif %}
+        <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+  <p style="color: #ffffff;">
+    <span style="font-size: 18px;">🛒</span>
+    MY CART
+    <span id="cart-count" style="font-size: 14px; color: yellow;">({{ cart_item_count }})</span>
+  </p>
+</button>
+
+                 </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="addtocartpopup" >
+    <div id="closePopup" class="closePopup" style="cursor: pointer; "><i class="fa fa-times"></i></div>
+<div style="justify-items: baseline;"><br>
+  <div><label for="size">Size: 
+  <select style="height: 30px;" name="size" id="size" >
+    <option class="option" value="Small" data-size="Small">S</option>
+    <option class="option" value="Medium" data-size="Medium">M</option>
+    <option class="option" value="Large" data-size="Large">L</option>
+    <option class="option" value="Extra-large" data-size="Extra-Large">XL</option>
+  </select>
+</label></div>
+<div>
+  
+<form action="Quantity">
+  <label for="quantity" style="justify-self: center;">Quantity:</label>
+  <input type="number" id="quantity" name="quantity" min="1" max="8" value="1" data-Quantity="value" >
+</form>
+</div>
+<div>
+</div>
+  </div><br>
+ <button class="addedToCartButton" id="">
+  <span class="add-to-cart">Add to cart</span>
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <div class="whole-wedding-page">
+<div style="position: absolute; ">    
+       <div id="mySidenav" class="sidenav">
+            <a href="#groom" id="groom1">Jump to Groom section</a>
+      </div>
+    </div>-->
+<p style="margin-top: 10vh;"> </p>
+        <h1 id="bride" style=" margin-bottom: 10vh; display: flex; justify-self: center;">BRIDE</h1>
+<div class="CardsContainer">
+    
+    <div class="cards" id="cards" style=" ">
+        <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/1.avif' %}" alt=""></div>
+        
+     <div class="details">
+         <div> White gold moslin veil </div>
+        <div> 6,97,500 tk</div>
+        <div> 
+    
+<button class="cart-button" id="dress" data-value="" data-id="White-gold-moslin-veil" data-name="White-gold-moslin-veil" data-price="697500">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button>
+
+</div>
+    
+     </div> 
+ </div>
+ <div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/2.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Red Rose Bridal </div>
+    <div> 80,399 tk</div>
+    <div> <button class="cart-button" id="dress" data.value="" data-id="Red-Rose-Bridal" data-name="Red-Rose-Bridal" data-price="80399">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/3.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Golden blossom </div>
+    <div> 94,980 tk</div>
+    <div> <button class="cart-button" id="dress" data.value="" data-id="Red-Rose-Bridal" data-name="Red-Rose-Bridal" data-price="80399">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/4.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div>Real Gold thread lehenga </div>
+    <div> 9,15,399 tk</div>
+    <div> <button class="cart-button" id="dress" data.value="" data-id="Real-Gold-thread-lehenga" data-name="Real-Gold-thread-lehenga" data-price="915399">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/5.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Kochuri </div>
+    <div> 75,700 tk</div>
+    <button class="cart-button" id="dress" data-value="0" data-id="Kochuri" data-name="Kochuri" data-price="75700">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button>
+
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/6.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Rani Rashmoni </div>
+    <div> 1,00,900 tk</div>
+<button class="cart-button" id="dress" data-value="0" data-id="Rani-Rashmoni" data-name="Rani-Rashmoni" data-price="100900">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/7.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> White Gold Threaded Ogil </div>
+    <div> 3,55,300 tk</div>
+<button class="cart-button" id="dress" data-value="0" data-id="White-Gold-Threaded-Ogil" data-name="White-Gold-Threaded-Ogil" data-price="355300">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/8.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gold Blood Diamond </div>
+    <div> 2,00,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Gold-Blood-Diamond" data-name="Gold-Blood-Diamond" data-price="200000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/9.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gultekin </div>
+    <div> 75,800 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Gultekin" data-name="Gultekin" data-price="75800">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/10.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Oyster Ivory </div>
+    <div> 86,200 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Oyster-Ivory" data-name="Oyster-Ivory" data-price="86200">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/11.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gulab Geet </div>
+    <div> 69,800 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Gulab-Geet" data-name="Gulab-Geet" data-price="69800">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/12.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Dulha Dolly </div>
+    <div> 97,700 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Dulha-Dolly" data-name="Dulha-Dolly" data-price="97700">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/13.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Ivory Costal </div>
+    <div> 95,399 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Ivory-Costal" data-name="Ivory-Costal" data-price="95,399">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/14.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Grey Gold Velvet  </div>
+    <div> 99,900 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Grey-Gold-Velvet" data-name="Grey-Gold-Velvet" data-price="99900">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/15.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gold Hand Embroidery </div>
+    <div> 75,399 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Gold-Hand-Embroidery" data-name="Gold-Hand-Embroidery" data-price="75399">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/16.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Grey Gold Velvet Embroidery </div>
+    <div> 1,87,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Grey-Gold-Velvet-Embroidery" data-name="Grey-Gold-Velvet-Embroidery" data-price="187000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/17.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gold Architectural Embroidery </div>
+    <div> 2,90,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Real-Gold-Architectural-Embroidery" data-name="Real-Gold-Architectural-Embroidery" data-price="290000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/18.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Antique Sculpted Couture </div>
+    <div> 99,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Antique-Sculpted-Couture" data-name="Antique-Sculpted-Couture" data-price="99000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/19.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Oyster Gold Dari Embroidery </div>
+    <div> 7,00,000 tk</div>
+    <div> <button class="cart-button" id="dress" data.value="" data-id="Oyster-Gold-Dari-Embroidery" data-name="Oyster-Gold-Dari-Embroidery" data-price="700000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/20.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Gulaab Jamun </div>
+    <div> 90,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Gulaab-Jamun" data-name="Gulaab-Jamun" data-price="90000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/21.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Haute Couture Gold Blossom </div>
+    <div> 2,05,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Haute-Couture-Gold-Blossom" data-name="Haute-Couture-Gold-Blossom" data-price="205000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/22.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Oyster Dari Embroidery </div>
+    <div> 99,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Oyster-Dari-Embroidery" data-name="Oyster-Dari-Embroidery" data-price="99000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+<div class="cards" id="cards" style=" ">
+    <div> <img class="weddingImg" src="{% static 'fastion_app/wedpic/MM-PR-LH-55540-BL-DP_C-XS-1.avif' %}" alt=""></div>
+    
+ <div class="details">
+     <div> Anarishka Kane Embroidered </div>
+    <div> 2,99,000 tk</div>
+   <div> <button class="cart-button" id="dress" data.value="" data-id="Anarishka-Kane-Embroidered" data-name="Anarishka-Kane-Embroidered" data-price="299000">
+  <span class="add-to-cart">Add to cart</span>
+  <span class="added">Added</span>
+  <i class="fas fa-shopping-cart"></i>
+  <i class="fas fa-box"></i>
+</button> </div>
+ </div> 
+</div>
+</div>
+
+
+    <!-- FOOTER -->
+     <p><br><br><br><br><br><br></p>
+<div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER </p></div>
+    <div><input type="email" placeholder="Enter email..." style="width: 300px; height: 35px; margin-left: 40px;"></div>
+    
+</div>
+<div class="footerbox" style="">
+  <div class="footer" >
+    
+    <div>
+      <ul type="none";>
+       <li class="list-header">CLIENT SERVICES</li>
+        <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+        <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+        <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+        <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+        
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+         <li class="list-header">LEGAL & PRIVACY</li>
+        <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+        <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+        <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+        <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+      <li class="list-header">CORPORATE</li>
+      <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+      <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+      <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+    </ul>
+    </div>
+
+  </div>
+  <div style="justify-self: end;">
+   <a href="https://www.facebook.com/BRAC.AARONG"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt="" style=""></a>
+    <a href="https://www.instagram.com/brac.aarong"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt="" style="" ></a>
+    <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt="" style="" ></a>
+    
+    </div>
+</div>
+<hr>
+<div class="credits"><p >© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p></div>
+</div>
+
+<script src="{% static 'fastion_app/js/java.js' %}"></script>
+   
+</body>
+</html>

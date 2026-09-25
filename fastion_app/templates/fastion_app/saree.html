@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saree</title>
+    <link rel="icon" type="image/png" href="{% static 'fastion_app\wedpic\R.png' %}">
+    <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+    <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        function navigate() {
+            var select = document.getElementById('category');
+            var url = select.options[select.selectedIndex].value;
+            window.location.href = url;
+        }
+        window.onscroll = function() {
+            var menu = document.getElementById("menu");
+            if (window.scrollY > 0) {
+                menu.style.position = "sticky";
+                menu.style.top = "0px";
+                menu.style.opacity = ".9";
+                menu.style.height = "6%";
+                menu.style.zIndex = "3";
+            } else {
+                menu.style.position = "static";
+                menu.style.opacity = "1";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+        <input class="search-container" type="search" class="search-box" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;">
+    </div>
+    <hr>
+
+    <!-- MENU -->
+    <div class="menu" id="menu" style="color: #ffffff;">
+        <div class="menus">
+            <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+            <div class="dropdown">
+                <button class="dropdown-btn">CATEGORIES</button>|
+                <div class="dropdown-content">
+                    <div class="submenu">
+                        <a>Women</a>
+                        <div class="submenu-content">
+                            <a href="{% url 'onepiece' %}">One Piece</a>
+                            <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+                            <a href="{% url 'saree' %}">Saree</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'men1' %}">Men</a>
+                    <div class="submenu">
+                        <a>Kids</a>
+                        <div class="submenu-content">
+                            <a href="{% url 'babyboy' %}">Baby boy</a>
+                            <a href="{% url 'babygirl' %}">Baby girl</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'accessories' %}">Accessories</a>
+                    <div class="submenu">
+                        <a>Wedding</a>
+                        <div class="submenu-content">
+                            <a href="{% url 'groom' %}">Groom</a>
+                            <a href="{% url 'bride' %}">Bride</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'shoes' %}">Shoes</a>
+                    <a href="{% url 'bag' %}">Bag</a>
+                </div>
+            </div>
+            <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+            <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'"><p style="color: #ffffff;">ABOUT US</p></button>|
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+                    <p style="color: #ffffff; margin:0;">LOGOUT</p>
+                </button>
+            </form>|
+            {% else %}
+            <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+                <p style="color: #ffffff;">LOGIN</p>
+            </button>|
+            {% endif %}
+          <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+  <p style="color: #ffffff;">
+    <span style="font-size: 18px;">🛒</span>
+    MY CART
+    <span id="cart-count" style="font-size: 14px; color: yellow;">({{ cart_item_count }})</span>
+  </p>
+</button>
+
+                       </div>
+    </div>
+
+    <div class="whole-wedding-page">
+        <h1 id="men" style="display: flex; justify-self: center;">Saree</h1>
+        <div class="CardsContainer">
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-light-green-v1-spf13744.jpg"></div>
+                <div class="details">
+                    <div>Katan Saree In Light Green</div>
+                    <div>Price: 21,550.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Katan Saree In Light Green', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-light-green-v1-spf13744.jpg', '21550.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-teal-blue-v1-spca751.jpg"></div>
+                <div class="details">
+                    <div>Blue Printed Katan Saree</div>
+                    <div>Price: 22,525.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Blue Printed Katan Saree', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-teal-blue-v1-spca751.jpg', '22525.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/b/a/banarasi-saree-in-orange-v1-snv1017.jpg"></div>
+                <div class="details">
+                    <div>Katan Saree In Orange</div>
+                    <div>Price: 18,200.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Katan Saree In Orange', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/b/a/banarasi-saree-in-orange-v1-snv1017.jpg', '18200.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/b/a/banarasi-saree-in-light-purple-v3-spf9911.jpg"></div>
+                <div class="details">
+                    <div>Katan Saree In Light Purple</div>
+                    <div>Price: 21,1780.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Katan Saree In Light Purple', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/b/a/banarasi-saree-in-light-purple-v3-spf9911.jpg', '211780.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-saree-in-dusty-green-v1-set173.jpg"></div>
+                <div class="details">
+                    <div>Net Saree In Dusty Green</div>
+                    <div>Price: 14,100.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Net Saree In Dusty Green', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-saree-in-dusty-green-v1-set173.jpg', '14100.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-scalloped-saree-in-peach-v1-set235.jpg"></div>
+                <div class="details">
+                    <div>Embroided Net Saree In Peach</div>
+                    <div>Price: 18,3250.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Embroided Net Saree In Peach', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-scalloped-saree-in-peach-v1-set235.jpg', '183250.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-scalloped-saree-in-black-v1-set242.jpg"></div>
+                <div class="details">
+                    <div>Embroided Net Saree In Black</div>
+                    <div>Price: 17,000.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Embroided Net Saree In Black', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-net-scalloped-saree-in-black-v1-set242.jpg', '17000.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-tissue-silk-saree-in-mustard-v1-sts8558.jpg"></div>
+                <div class="details">
+                    <div>Embroided Net Saree In Yellow</div>
+                    <div>Price: 16,456.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Embroided Net Saree In Yellow', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/e/m/embroidered-tissue-silk-saree-in-mustard-v1-sts8558.jpg', '16456.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-cotton-saree-in-off-white-v1-sskt902.jpg"></div>
+                <div class="details">
+                    <div>Cotton Saree In Off White</div>
+                    <div>Price: 14,234.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Cotton Saree In Off White', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-cotton-saree-in-off-white-v1-sskt902.jpg', '14234.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/d/i/digital-printed-cotton-saree-in-light-green-v1-sff3187.jpg"></div>
+                <div class="details">
+                    <div>Cotton Saree In Off White</div>
+                    <div>Price: 15,780.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Cotton Saree In Off White', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/d/i/digital-printed-cotton-saree-in-light-green-v1-sff3187.jpg', '15580.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-scalloped-saree-in-pink-v1-ssea2418.jpg"></div>
+                <div class="details">
+                    <div>Slik Saree In Pink</div>
+                    <div>Price: 21,548.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Slik Saree In Pink', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-scalloped-saree-in-pink-v1-ssea2418.jpg', '21548.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="cards">
+                <div><img class="weddingImg" src="https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-yellow-v1-scga434.jpg"></div>
+                <div class="details">
+                    <div>Slik Saree In Yellow</div>
+                    <div>Price: 21,677.00TK</div>
+                    <button class="cart-button" onclick="openPopup('Slik Saree In Yellow', 'https://medias.utsavfashion.com/media/catalog/product/cache/1/small_image/295x/040ec09b1e35df139433887a97daa66f/w/o/woven-art-silk-saree-in-yellow-v1-scga434.jpg', '21677.00')">
+                        <span class="add-to-cart">Add to cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Django form (only one needed) -->
+    <form id="add-to-cart-form" method="post" action="{% url 'add_to_cart' %}" style="display:none;">
+        {% csrf_token %}
+        <input type="hidden" name="product_name" id="popup_product_name">
+        <input type="hidden" name="product_image" id="popup_product_image">
+        <input type="hidden" name="price" id="popup_price">
+        <input type="hidden" name="size" id="popup_size">
+        <input type="hidden" name="quantity" id="popup_quantity">
+    </form>
+
+   <!-- Popup HTML (one global popup) -->
+    <div  id="popup" style="justify-content: center; justify-items: center; width:20vw; border-radius: 10%; border-style: dashed; border-width: 2px; border-color: black; display:none; position:fixed; top:55%; left:50%; transform:translate(-50%,-50%); background:#fff; border:1px solid #ccc; padding:30px; z-index:1000;">
+        <span style="float:right; cursor:pointer;" onclick="closePopup()">&times;</span>
+        <h4 id="popup_title"></h4>
+        <label>Size:
+            <select id="popup_select_size">
+                <option value="Small">S</option>
+                <option value="Medium">M</option>
+                <option value="Large">L</option>
+                <option value="Extra-large">XL</option>
+            </select>
+        </label>
+        <br>
+        <label>Quantity:
+            <input type="number" id="popup_input_quantity" value="1" min="1" max="8">
+        </label>
+        <br><br>
+        <button onclick="submitPopupForm()" class="cart-button">Add to cart</button>
+    </div>
+    <div id="popup_overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:999;" onclick="closePopup()"></div>
+<script>
+        function openPopup(name, image, price) {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('popup_overlay').style.display = 'block';
+            document.getElementById('popup_title').textContent = name;
+            document.getElementById('popup').dataset.productName = name;
+            document.getElementById('popup').dataset.productImage = image;
+            document.getElementById('popup').dataset.price = price;
+        }
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup_overlay').style.display = 'none';
+        }
+        function submitPopupForm() {
+            document.getElementById('popup_product_name').value = document.getElementById('popup').dataset.productName;
+            document.getElementById('popup_product_image').value = document.getElementById('popup').dataset.productImage;
+            document.getElementById('popup_price').value = document.getElementById('popup').dataset.price;
+            document.getElementById('popup_size').value = document.getElementById('popup_select_size').value;
+            document.getElementById('popup_quantity').value = document.getElementById('popup_input_quantity').value;
+            document.getElementById('add-to-cart-form').submit();
+        }
+    </script>
+    <script src="{% static 'fastion_app/js/java.js' %}"></script>
+
+    <!-- FOOTER -->
+    <div class="subscribe">
+        <div class="newsletter"><p>JOIN OUR NEWSLETTER </p></div>
+        <div><input type="email" placeholder="Enter email..." style="width: 300px; height: 35px; margin-left: 40px;"></div>
+    </div>
+    <div class="footerbox">
+        <div class="footer">
+            <div>
+                <ul type="none">
+                    <li class="list-header">CLIENT SERVICES</li>
+                    <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+                    <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+                    <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+                    <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul type="none">
+                    <li class="list-header">LEGAL & PRIVACY</li>
+                    <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+                    <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+                    <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+                    <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul type="none">
+                    <li class="list-header">CORPORATE</li>
+                    <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+                    <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+                    <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="justify-self: end;">
+            <a href="https://www.facebook.com/BRAC.AARONG/"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt=""></a>
+            <a href="https://www.instagram.com/brac.aarong/"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt=""></a>
+            <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt=""></a>
+        </div>
+    </div>
+    <hr>
+    <div class="credits"><p>© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p></div>
+  </body>
+  </html>

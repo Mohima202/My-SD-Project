@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Aplication Form</title>
+    <link rel="icon" type="image/png" href="{% static 'fastion_app\wedpic\R.png' %}">
+  <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+  <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+   <!-- CATEGORY JS-->
+   <script>
+    function navigate() {
+      var select = document.getElementById('category');
+      var url = select.options[select.selectedIndex].value;
+      window.location.href = url;
+    }
+  </script>
+      <script>
+        window.onscroll = function()
+        {
+          var menu = document.getElementById("menu");
+          if (window.scrollY > 0)
+        {
+          menu.style.position = "sticky";
+          menu.style.top = "0px";
+          menu.style.opacity = ".9";
+          menu.style.zIndex="3";
+        }
+        else
+        {menu.style.position = "static";
+          menu.style.opacity = "1";
+        }
+        }
+      </script>
+
+
+
+      <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #4cae4c;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+      </style>
+  </head> <!--header-->
+  <body>
+
+    <div class="header">
+       <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+       
+        <input class="search-container" type="search" class="search-box" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;" >
+    </div><hr>
+
+<!--MENU-->
+   <div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+      <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+      <div class="dropdown">
+        <button class="dropdown-btn">CATEGORIES</button>|
+        <div class="dropdown-content">
+          <div class="submenu">
+            <a>Women</a>
+            <div class="submenu-content">
+              <a href="{% url 'onepiece' %}">One Piece</a>
+              <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+              <a href="{% url 'saree' %}">Saree</a>
+            </div>
+          </div>
+          <a href="{% url 'men1' %}">Men</a>
+          <div class="submenu">
+            <a>Kids</a>
+             <div class="submenu-content">
+                        <a href="{% url 'babyboy' %}">Baby boy</a>
+                        <a href="{% url 'babygirl' %}">Baby girl</a>
+                    
+                    </div>
+                </div>
+                <a href="{% url 'accessories' %}">Accessories</a>
+                <div class="submenu">
+                <a>Wedding</a>
+                <div class="submenu-content">
+                  <a href="{% url 'groom' %}">Groom</a>
+                  <a href="{% url 'bride' %}">Bride</a>
+              
+              </div>
+          </div>
+                <a href="{% url 'shoes' %}">Shoes</a>
+                <a href="{% url 'bag' %}">Bag</a>
+            </div>
+           </div>
+     <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+          <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+          {% if user.is_authenticated %}
+          <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+              <p style="color: #ffffff; margin:0;">LOGOUT</p>
+            </button>
+          </form>|
+        {% else %}
+          <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+            <p style="color: #ffffff;">LOGIN</p>
+          </button>|
+        {% endif %}
+       <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+  <p style="color: #ffffff;">
+    <span style="font-size: 18px;">🛒</span>
+    MY CART
+    <span id="cart-count" style="font-size: 14px; color: yellow;">({{ cart_item_count }})</span>
+  </p>
+</button>
+
+                 </div>
+    </div>
+  </div>
+    
+<br><br>
+<h1 style="justify-self: center;">Job Application Form</h1>
+<div class="container" style="width: 900px;">
+        
+        <form id="job-application-form">
+            <fieldset style="width: 850px">
+                <legend>Personal Information</legend>
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" name="full-name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </fieldset>
+<br><br>
+            <fieldset style="width: 850px">
+                <legend style="font-size: 12px;">Education</legend>
+                <label for="degree">Degree:</label>
+                <input type="text" id="degree" name="degree" required>
+
+                <label for="institution">Institution:</label>
+                <input type="text" id="institution" name="institution" required>
+
+                <label for="graduation-year">Year of Graduation:</label>
+                <input type="number" id="graduation-year" name="graduation-year" required>
+            </fieldset>
+<br><br>
+            <fieldset style="width: 850px">
+                <legend>Work Experience</legend>
+                <label for="company">Company Name:</label>
+                <div><input type="text" id="company" name="company"></div>
+
+                <label for="position">Position:</label>
+                <input type="text" id="position" name="position">
+
+                <label for="years">Years of Experience:</label>
+                <input type="number" id="years" name="years">
+            </fieldset>
+<br><br>
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+    <script src="{% static 'fastion-app/js/script.js' %}"></script>
+
+    <hr>
+    <!-- FOOTER -->
+<div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER </p></div>
+    <div><input type="email" placeholder="Enter email..." style="width: 300px; height: 35px; margin-left: 40px;"></div>
+    
+</div>
+<div class="footerbox" style="">
+  <div class="footer" >
+    
+    <div>
+      <ul type="none";>
+        <li class="list-header">CLIENT SERVICES</li>
+        <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+        <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+        <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+        <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+        
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+        <li class="list-header">LEGAL & PRIVACY</li>
+        <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+        <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+        <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+        <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+       <li class="list-header">CORPORATE</li>
+      <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+      <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+      <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+    </ul>
+    </div>
+
+  </div>
+  <div style="justify-self: end;">
+    <a href="https://www.facebook.com/BRAC.AARONG"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt="" style=""></a>
+    <a href="https://www.instagram.com/brac.aarong"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt="" style="" ></a>
+    <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt="" style="" ></a>
+    
+    </div>
+</div>
+<hr>
+<div class="credits"><p >© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p></div>
+</div>
+
+<script src="{% static 'fastion_app/js/script.js' %}"></script>
+
+   
+</body>
+</html>

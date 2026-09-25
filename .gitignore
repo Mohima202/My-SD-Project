@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.sqlite3
+*.zip
+.vscode/
+
+fastion_app/static/fastion_app/wedpic/wedpic.zip
+
+fastion_app/static/fastion_app/wedpic/pic/Red Modern Hiring Instagram Post - Instagram Post.html
+
+fastion_app/static/fastion_app/wedpic/pic/Red Modern Hiring Instagram Post - Instagram Post_files/

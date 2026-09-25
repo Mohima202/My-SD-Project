@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proceed Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 40px;
+    }
+
+    .payment-container {
+      background: #fff;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .payment-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-submit {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+
+    .amount-display {
+      font-size: 20px;
+      color: #28a745;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="payment-container">
+  <h2>Proceed to Payment</h2>
+<p style="justify-self: center;  color: red;"> Inaccurate information will result in order cancellation.</p>
+  <!-- 🔐 User Info Form -->
+  <form id="userForm">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="account">User Name</label>
+      <input type="text" id="account" name="account" value="{{ username }}" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" name="phone" value="{{ user_profile.phone_number }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea id="address" name="address" rows="3" required>{{ user_profile.address }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="country_code">Select Country</label>
+      <select id="country_code" name="country_code" required>
+        <option value="BD" {% if user_profile.country_code == "BD" %}selected{% endif %}>Bangladesh</option>
+        <option value="IN" {% if user_profile.country_code == "IN" %}selected{% endif %}>India</option>
+        <option value="PAK" {% if user_profile.country_code == "PAK" %}selected{% endif %}>Pakistan</option>
+        <option value="UK" {% if user_profile.country_code == "UK" %}selected{% endif %}>United Kingdom</option>
+        <option value="Others" {% if user_profile.country_code not in "BDINUK" %}selected{% endif %}>Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="product_total">Product Total (৳)</label>
+      <input type="number" id="product_total" name="product_total" value="{{ total_cart_amount }}" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="delivery">Delivery Charge</label>
+      <input type="number" id="delivery" name="delivery" value="{{ delivery_charge }}" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Final Total Amount (৳)</label>
+      <input type="number" id="amount" name="amount" value="{{ total_amount }}" readonly required />
+      <div class="amount-display">Total: ৳<span id="total-display">{{ total_amount }}</span></div>
+    </div>
+
+    <!-- 💳 Payment Method Selection -->
+    <div class="form-group">
+      <label>Payment Method</label>
+      <div class="payment-methods">
+        <label><input type="radio" name="payment" value="Card" required /> Card</label>
+        <label><input type="radio" name="payment" value="bKash" /> bKash</label>
+        <label><input type="radio" name="payment" value="Nagad" /> Nagad</label>
+        <label><input type="radio" name="payment" value="COD" /> Cash on Delivery</label>
+      </div>
+    </div>
+
+    <div class="form-group" id="trxid-group" style="display: none;">
+      <label for="trxid">Transaction ID</label>
+      <input type="text" id="trxid" name="trxid" placeholder="Enter Transaction ID" />
+    </div>
+  </form>
+
+  <!-- ✅ Hidden Submit Form -->
+  <form method="post" action="{% url 'payment_done' %}" onsubmit="return forwardPayment()">
+    {% csrf_token %}
+    <input type="hidden" id="final_method" name="method" value="">
+    <input type="hidden" id="final_trxid" name="trxid" value="">
+    <input type="hidden" id="final_country_code" name="country_code" value=""> <!-- ✅ ADDED -->
+    <button type="submit" class="btn-submit">Confirm Payment</button>
+  </form>
+</div>
+
+<script>
+  const deliveryInput = document.getElementById("delivery");
+  const totalInput = document.getElementById("amount");
+  const totalDisplay = document.getElementById("total-display");
+  const countrySelect = document.getElementById("country_code");
+  const productTotal = parseFloat(document.getElementById("product_total").value);
+
+  const deliveryCharges = {
+    BD: 60,
+    IN: 120,
+    UK: 250,
+    PAK: 180,
+    Others: 350
+  };
+
+  countrySelect.addEventListener("change", function () {
+    const selected = this.value;
+    const delivery = deliveryCharges[selected] || deliveryCharges["Others"];
+    const finalTotal = productTotal + delivery;
+
+    deliveryInput.value = delivery;
+    totalInput.value = finalTotal;
+    totalDisplay.textContent = finalTotal;
+  });
+
+  const radios = document.querySelectorAll('input[name="payment"]');
+  const trxidDiv = document.getElementById("trxid-group");
+  const trxidInput = document.getElementById("trxid");
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', function () {
+      if (["bKash", "Nagad", "Card"].includes(this.value)) {
+        trxidDiv.style.display = "block";
+        trxidInput.required = true;
+      } else {
+        trxidDiv.style.display = "none";
+        trxidInput.required = false;
+        trxidInput.value = '';
+      }
+    });
+  });
+
+  function forwardPayment() {
+    const selectedMethod = document.querySelector('input[name="payment"]:checked');
+    const trxid = document.getElementById("trxid").value.trim();
+
+    if (!selectedMethod) {
+      alert("Please select a payment method.");
+      return false;
+    }
+
+    const method = selectedMethod.value;
+
+    const bkashTxnPattern = /^[A-Z0-9]{10}$/;
+    const nagadTxnPattern = /^[A-Z0-9]{10,14}$/;
+    const cardPattern = /^[A-Za-z0-9]{12,18}$/;
+
+    if (["bKash", "Nagad", "Card"].includes(method)) {
+      if (!trxid) {
+        alert("Please enter the Transaction ID for " + method + ".");
+        return false;
+      }
+
+      if (
+        (method === "bKash" && !bkashPattern.test(trxid)) ||
+        (method === "Nagad" && !nagadPattern.test(trxid)) ||
+        (method === "Card" && !cardPattern.test(trxid))
+      ) {
+        alert("Invalid Transaction ID format for " + method + ".");
+        return false;
+      }
+    }
+
+    // ✅ Pass all final data
+    document.getElementById("final_method").value = method;
+    document.getElementById("final_trxid").value = trxid;
+    document.getElementById("final_country_code").value = countrySelect.value;
+
+    return true;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="icon" type="image/png" href="{% static 'fastion_app\wedpic\R.png' %}">
+    <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+    <link rel="stylesheet" href="{% static 'fastion_app/css/men.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-size: 14px;
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2em 0;
+            background: #fff;
+        }
+        .cart-table th, .cart-table td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .cart-table th {
+            background: #f8f8f8;
+        }
+        .cart-img {
+            max-height: 80px;
+            width: auto;
+        }
+        .cart-remove-btn {
+            background: #d9534f;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .cart-remove-btn:hover {
+            background: #c9302c;
+        }
+        .cart-summary {
+            text-align: right;
+            margin-top: 1em;
+            font-size: 1.1em;
+        }
+    </style>
+    <!-- <script>
+        window.onscroll = function () {
+            var menu = document.getElementById("menu");
+            if (window.scrollY > 0) {
+                menu.style.position = "sticky";
+                menu.style.top = "0px";
+                menu.style.opacity = ".9";
+                menu.style.height = "6%";
+                menu.style.zIndex = "3";
+            } else {
+                menu.style.position = "static";
+                menu.style.opacity = "1";
+            }
+        }
+    </script> -->
+</head>
+<body>
+
+<div class="header">
+    <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+    <input class="search-container" type="search" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;">
+</div>
+<hr>
+
+<!-- MENU -->
+<div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+        <button class="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+        <div class="dropdown">
+            <button class="dropdown-btn">CATEGORIES</button>|
+            <div class="dropdown-content">
+                <div class="submenu">
+                    <a>Women</a>
+                    <div class="submenu-content">
+                        <a href="{% url 'onepiece' %}">One Piece</a>
+                        <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+                        <a href="{% url 'saree' %}">Saree</a>
+                    </div>
+                </div>
+                <a href="{% url 'men1' %}">Men</a>
+                <div class="submenu">
+                    <a>Kids</a>
+                    <div class="submenu-content">
+                        <a href="{% url 'babyboy' %}">Baby boy</a>
+                        <a href="{% url 'babygirl' %}">Baby girl</a>
+                    </div>
+                </div>
+                <a href="{% url 'accessories' %}">Accessories</a>
+                <div class="submenu">
+                    <a>Wedding</a>
+                    <div class="submenu-content">
+                        <a href="{% url 'groom' %}">Groom</a>
+                        <a href="{% url 'bride' %}">Bride</a>
+                    </div>
+                </div>
+                <a href="{% url 'shoes' %}">Shoes</a>
+                <a href="{% url 'bag' %}">Bag</a>
+            </div>
+        </div>
+        <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+        <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+          <p style="color: #ffffff; margin:0;">LOGOUT</p>
+        </button>
+      </form>|
+    {% else %}
+      <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+        <p style="color: #ffffff;">LOGIN</p>
+      </button>|
+    {% endif %}
+ 
+           <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+  <p style="color: #ffffff; "><span style="font-size: 18px;">🛒</span>
+    MY CART<span  id="cart-count" style="font-size: 14px; color: yellow;">({{ total_items }})</span></p></button>
+         </div>
+    </div>
+
+     {% if user.is_authenticated %}
+        <div style="margin: 3%; font-size: 20px;">
+            <h2>🛒 My Cart ({{ total_items }} items)</h2>
+            {% if cart_items %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price Per Item</th>
+                        <th>Total Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td><img src="{{ item.product_image }}" alt="{{ item.product_name }}" class="cart-img"></td>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.size }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>
+                    <form method="post" action="{% url 'remove_cart_item' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="cart-remove-btn">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <div>
+            <div class="cart-summary">
+        <strong>Total Items:</strong> {{ total_items }}<br>
+        <strong>Grand Total:</strong> {{ grand_total }}
+    </div>
+    <div style="justify-self: center;   width: 150vh;  padding-left: 38vw;">
+        <button onclick="window.location.href='{% url 'payment' %}'" class="cart-button" style="width: 20vw; font-size: 20px; text-decoration:solid;">Proceed to Payment</button>
+    </div>
+    </div>
+    {% else %}
+    <div>Your cart is empty.</div>
+    {% endif %}
+</div>
+
+    {% else %}
+    <div style="margin: 3%; font-size: 20px;">
+        <h2>🛒 My Cart ({{ total_items }} items)</h2>
+        <p>Please <a href="{% url 'login' %}">login</a> to view your cart.</p>
+    </div>
+    {% endif %}
+
+<!-- FOOTER -->
+<div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER</p></div>
+    <div><input type="email" placeholder="Enter email..." style="width: 220px; height: 35px; margin-left: 40px;"></div>
+</div>
+
+<div class="footerbox">
+    <div class="footer">
+        <div>
+            <ul type="none">
+                <li class="list-header">CLIENT SERVICES</li>
+                <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+                <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+                <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+                <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul type="none">
+                <li class="list-header">LEGAL & PRIVACY</li>
+                <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+                <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+                <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+                <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul type="none">
+                <li class="list-header">CORPORATE</li>
+                <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+                <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+                <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <a href="https://www.facebook.com/BRAC.AARONG"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}"></a>
+        <a href="https://www.instagram.com/brac.aarong"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}"></a>
+        <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}"></a>
+    </div>
+</div>
+<hr>
+<div class="credits">
+    <p>© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p>
+</div>
+</body>
+</html>

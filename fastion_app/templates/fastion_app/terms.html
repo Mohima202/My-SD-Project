@@ -1,0 +1,240 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions</title>
+    <link rel="icon" type="image/png" href="{% static 'fastion_app/pic/R.jpg' %}">
+  <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+  <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+   <!-- CATEGORY JS-->
+   <script>
+    function navigate() {
+      var select = document.getElementById('category');
+      var url = select.options[select.selectedIndex].value;
+      window.location.href = url;
+    }
+  </script>
+      <script>
+        window.onscroll = function()
+        {
+          var menu = document.getElementById("menu");
+          if (window.scrollY > 0)
+        {
+          menu.style.position = "sticky";
+          menu.style.top = "0px";
+          menu.style.opacity = ".9";
+          menu.style.height = "6%";
+          menu.style.zIndex="3";
+        }
+        else
+        {menu.style.position = "static";
+          menu.style.opacity = "1";
+        }
+        }
+      </script>
+  </head> <!--header-->
+  <body>
+
+    <div class="header">
+       <img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px;padding-top: 5px;">
+       
+        <input class="search-container" type="search" class="search-box" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;" >
+    </div><hr>
+
+<!--MENU-->
+    <div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+      <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+      <div class="dropdown">
+        <button class="dropdown-btn">CATEGORIES</button>|
+        <div class="dropdown-content">
+          <div class="submenu">
+            <a>Women</a>
+            <div class="submenu-content">
+              <a href="{% url 'onepiece' %}">One Piece</a>
+              <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+              <a href="{% url 'saree' %}">Saree</a>
+            </div>
+          </div>
+          <a href="{% url 'men1' %}">Men</a>
+          <div class="submenu">
+            <a>Kids</a>
+             <div class="submenu-content">
+                        <a href="{% url 'babyboy' %}">Baby boy</a>
+                        <a href="{% url 'babygirl' %}">Baby girl</a>
+                    
+                    </div>
+                </div>
+                <a href="{% url 'accessories' %}">Accessories</a>
+                <div class="submenu">
+                <a>Wedding</a>
+                <div class="submenu-content">
+                  <a href="{% url 'groom' %}">Groom</a>
+                  <a href="{% url 'bride' %}">Bride</a>
+              
+              </div>
+          </div>
+                <a href="{% url 'shoes' %}">Shoes</a>
+                <a href="{% url 'bag' %}">Bag</a>
+            </div>
+           </div>
+       <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+       <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+       {% if user.is_authenticated %}
+           <form method="post" action="{% url 'logout' %}" style="display:inline;">
+             {% csrf_token %}
+             <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+               <p style="color: #ffffff; margin:0;">LOGOUT</p>
+             </button>
+           </form>|
+         {% else %}
+           <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+             <p style="color: #ffffff;">LOGIN</p>
+           </button>|
+         {% endif %}
+        <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+  <p style="color: #ffffff;">
+    <span style="font-size: 18px;">🛒</span>
+    MY CART
+    <span id="cart-count" style="font-size: 14px; color: yellow;">({{ cart_item_count }})</span>
+  </p>
+</button>
+
+                 </div>
+    </div>
+
+   <!--content--> 
+   <div style="display: flex; position: relative;"><img  style="width: 100%; height: 300px;" src="{% static 'fastion_app/pic/fabricshiny.jpg' %}" alt=""></div>
+    <div class="container">
+ <div class="sidebar">
+      <ul type="none">
+         <li class="list-header">LEGAL & PRIVACY</li>
+        <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+        <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+        <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+        <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+      </ul>
+    </div>
+<div class="content" style="margin-bottom: 200px;">
+    
+        <p class="list-header1">Website Terms of Use</p>
+        <p class="paragraphs">
+            <b>Introduction</b><br>
+            Welcome to Renabelle. These terms and conditions outline the rules and regulations for the use of Renabelle's Website, located at renabelle.com.
+        </p>
+        <p class="paragraphs">
+            <b>Acceptance of Terms</b><br>
+            By accessing this website, we assume you accept these terms and conditions. Do not continue to use Renabelle if you do not agree to take all of the terms and conditions stated on this page.
+        </p>
+        <p class="paragraphs">
+            <b>Intellectual Property Rights</b><br>
+            Unless otherwise stated, Renabelle and/or its licensors own the intellectual property rights for all material on Renabelle. All intellectual property rights are reserved. You may access this from Renabelle for your own personal use subjected to restrictions set in these terms and conditions.
+        </p>
+        <p class="paragraphs">
+            <b>Restrictions</b><br>
+            You are specifically restricted from all of the following:
+            <ul>
+                <li>Publishing any website material in any other media</li>
+                <li>Selling, sublicensing, and/or otherwise commercializing any website material</li>
+                <li>Publicly performing and/or showing any website material</li>
+                <li>Using this website in any way that is or may be damaging to this website</li>
+                <li>Using this website in any way that impacts user access to this website</li>
+                <li>Using this website contrary to applicable laws and regulations, or in any way may cause harm to the website, or to any person or business entity</li>
+                <li>Engaging in any data mining, data harvesting, data extracting, or any other similar activity in relation to this website</li>
+                <li>Using this website to engage in any advertising or marketing</li>
+            </ul>
+        </p>
+        <p class="paragraphs">
+            <b>Your Privacy</b><br>
+            Please read our Privacy Policy.
+        </p>
+        <p class="paragraphs">
+            <b>Limitation of Liability</b><br>
+            In no event shall Renabelle, nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this website whether such liability is under contract. Renabelle, including its officers, directors, and employees shall not be held liable for any indirect, consequential, or special liability arising out of or in any way related to your use of this website.
+        </p>
+        <p class="paragraphs">
+            <b>Indemnification</b><br>
+            You hereby indemnify to the fullest extent Renabelle from and against any and/or all liabilities, costs, demands, causes of action, damages, and expenses arising in any way related to your breach of any of the provisions of these Terms.
+        </p>
+        <p class="paragraphs">
+            <b>Severability</b><br>
+            If any provision of these Terms is found to be invalid under any applicable law, such provisions shall be deleted without affecting the remaining provisions herein.
+        </p>
+ <p class="paragraphs">
+            <b>Variation of Terms</b><br>
+            Renabelle is permitted to revise these Terms at any time as it sees fit, and by using this website you are expected to review these Terms on a regular basis.
+        </p>
+        <p class="paragraphs">
+            <b>Assignment</b><br>
+            Renabelle is allowed to assign, transfer, and subcontract its rights and/or obligations under these Terms without any notification. However, you are not allowed to assign, transfer, or subcontract any of your rights and/or obligations under these Terms.
+        </p>
+        <p class="paragraphs">
+            <b>Entire Agreement</b><br>
+            These Terms constitute the entire agreement between Renabelle and you in relation to your use of this website and supersede all prior agreements and understandings.
+        </p>
+        <p class="paragraphs">
+            <b>Governing Law & Jurisdiction</b><br>
+            These Terms will be governed by and interpreted in accordance with the laws of Bangladesh, and you submit to the non-exclusive jurisdiction of the courts for the resolution of any disputes.
+        </p>
+    
+</div>
+
+</div>
+ <!-- FOOTER -->
+<div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER </p></div>
+    <div><input type="email" placeholder="Enter email..." style="width: 300px; height: 35px; margin-left: 40px;"></div>
+    
+</div>
+<div class="footerbox" style="">
+  <div class="footer" >
+    
+    <div>
+      <ul type="none";>
+          <li class="list-header">CLIENT SERVICES</li>
+        <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+        <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+        <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+        <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+        
+        
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+        <li class="list-header">LEGAL & PRIVACY</li>
+        <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+        <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+        <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+        <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul type="none">
+       <li class="list-header">CORPORATE</li>
+      <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+      <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+      <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+    </ul>
+    </div>
+
+  </div>
+  <div style="justify-self: end;">
+    <a href="https://www.facebook.com/BRAC.AARONG/"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt=""></a>
+      <a href="https://www.instagram.com/brac.aarong/"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt=""></a>
+      <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt=""></a>
+    </div>
+</div>
+<hr>
+<div class="credits"><p >© RENABELLE - ALL RIGHTS RESERVED - P. IVA 00900421009 LICENZA SIAE N. 3566/I/1417 - Renabelle Fashion Official Online Store</p></div>
+</div>
+
+
+   
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+        .receipt-box {
+            background: #fff;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+        .receipt-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-box table {
+            width: 100%;
+            font-size: 16px;
+            border-collapse: collapse;
+        }
+        .receipt-box td {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .label {
+            font-weight: bold;
+            width: 40%;
+        }
+        .status-paid {
+            color: green;
+            font-weight: bold;
+        }
+        .status-unpaid {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-box">
+        <h2>Payment Receipt</h2>
+        <table>
+            <!-- Order Info -->
+            <tr>
+                <td class="label">Order ID:</td>
+                <td>#{{ order.id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Order Date:</td>
+                <td>{{ order.order_date|date:"F j, Y, g:i A" }}</td>
+            </tr>
+
+            <!-- Customer Info -->
+            <tr>
+                <td class="label">Customer Name:</td>
+                <td>{{ order.full_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Phone Number:</td>
+                <td>+{{ order.country_code }} {{ order.phone_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Country:</td>
+                <td>{{ order.country }}</td>
+            </tr>
+            <tr>
+                <td class="label">Delivery Address:</td>
+                <td>{{ order.delivery_address }}</td>
+            </tr>
+
+            <!-- Product Info -->
+            <tr>
+                <td class="label">Products:</td>
+                <td>{{ order.product_details }}</td>
+            </tr>
+            <tr>
+                <td class="label">Product Total:</td>
+                <td>৳{{ order.amount }}</td>
+            </tr>
+            <tr>
+                <td class="label">Delivery Charge:</td>
+                <td>৳{{ order.delivery_charge }}</td>
+            </tr>
+            <tr>
+                <td class="label">Grand Total:</td>
+                <td><strong>৳{{ order.grand_total }}</strong></td>
+            </tr>
+
+            <!-- Payment Info -->
+            <tr>
+                <td class="label">Payment Method:</td>
+                <td>{{ order.payment_method }}</td>
+            </tr>
+            <tr>
+                <td class="label">Transaction ID:</td>
+                <td>
+                    {% if order.transaction_id %}
+                        {{ order.transaction_id }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Payment Status:</td>
+                <td>
+                    {% if order.is_paid %}
+                        <span class="status-paid">Paid</span>
+                    {% else %}
+                        <span class="status-unpaid">Unpaid</span>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <!-- Delivery Info -->
+            <tr>
+                <td class="label">Delivery Type:</td>
+                <td>{{ order.delivery_type }}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

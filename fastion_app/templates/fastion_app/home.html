@@ -1,0 +1,407 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renabelle Home</title>
+  <link rel="icon" type="image/png" href="{% static 'fastion_app/wedpic/R.png' %}">
+  <link rel="stylesheet" href="{% static 'fastion_app/css/frontpage.css' %}">
+  <link rel="stylesheet1" href="{% static 'fastion_app/css/men.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet2">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet3">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+  <style>
+    .imag {
+  width: 95%;
+  height: 130vh;        
+  object-fit: cover;     
+  border-radius: 12px;  
+}
+
+    .parallax-hero {
+      background-image: url("{% static 'fastion_app/wedpic/aarong.png' %}");
+      min-height: 400px;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 48px;
+      font-family: 'Segoe UI', Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px #333;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      pointer-events: none;
+      animation: floatBubble 12s linear infinite;
+       background: #d4bea1 !important;
+    }
+    @keyframes floatBubble {
+      0% { transform: translateY(0) scale(1);}
+      50% { transform: translateY(-200px) scale(1.2);}
+      100% { transform: translateY(-400px) scale(1);}
+    }
+   
+    
+    
+  </style>
+  <script>
+    function navigate() {
+      var select = document.getElementById('category');
+      var url = select.options[select.selectedIndex].value;
+      window.location.href = url;
+    }
+    window.onscroll = function() {
+      var menu = document.getElementById("menu");
+      if (window.scrollY > 0) {
+        menu.style.position = "sticky";
+        menu.style.top = "0px";
+        menu.style.opacity = ".9";
+        menu.style.height = "6%";
+        menu.style.zIndex = "3";
+      } else {
+        menu.style.position = "static";
+        menu.style.opacity = "1";
+      }
+    }
+  </script>
+</head>
+
+<body>
+ 
+  <div class="parallax-hero" id="parallax-hero">
+    <span>RENABELLE FASHION</span>
+   
+    <div id="bubbles"></div>
+  </div>
+
+  <div class="header">
+    <div><img src="{% static 'fastion_app/pic/logo2.jpeg' %}" alt="logo" style="height:40px; padding-top: 5px;"></div>
+    <div style="align-items: center; display: flex;">
+      <div><input type="search" class="search-container" placeholder="Search..." style="border-radius: 20px; height: 30px; width: 200px;"></div>
+    </div>
+  </div>
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success" style="border-radius: 50%; font-size: 20px; height: 25px; justify-self: end; background-color: rgba(212, 190, 161, 0.539); align-items: center;">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+  <hr>
+
+  <!-- MENU -->
+  <div class="menu" id="menu" style="color: #ffffff;">
+    <div class="menus">
+      <button class="button" type="button" onclick="window.location.href='{% url 'home' %}'"><p style="color: #ffffff;">HOME</p></button>|
+      <div class="dropdown">
+        <button class="dropdown-btn">CATEGORIES</button>|
+        <div class="dropdown-content">
+          <div class="submenu">
+            <a>Women</a>
+            <div class="submenu-content">
+              <a href="{% url 'onepiece' %}">One Piece</a>
+              <a href="{% url 'salwarkameez' %}">Salwar kameez</a>
+              <a href="{% url 'saree' %}">Saree</a>
+            </div>
+          </div>
+          <a href="{% url 'men1' %}">Men</a>
+          <div class="submenu">
+            <a>Kids</a>
+            <div class="submenu-content">
+              <a href="{% url 'babyboy' %}">Baby boy</a>
+              <a href="{% url 'babygirl' %}">Baby girl</a>
+            </div>
+          </div>
+          <a href="{% url 'accessories' %}">Accessories</a>
+          <div class="submenu">
+            <a>Wedding</a>
+            <div class="submenu-content">
+              <a href="{% url 'groom' %}">Groom</a>
+              <a href="{% url 'bride' %}">Bride</a>
+            </div>
+          </div>
+          <a href="{% url 'shoes' %}">Shoes</a>
+          <a href="{% url 'bag' %}">Bag</a>
+        </div>
+      </div>
+      <button class="button" type="button"><p style="color: #ffffff;" onclick="window.location.href='{% url 'sale' %}'">SALE</p></button>|
+      <button class="button" type="button" onclick="window.location.href='{% url 'aboutUs' %}'" ><p style="color: #ffffff;">ABOUT US</p></button>|
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button class="button" type="button" onclick="window.location.href='{% url 'logout' %}'" style="background:none; border:none; padding:0;">
+          <p style="color: #ffffff; margin:0;">LOGOUT</p>
+        </button>
+      </form>|
+      {% else %}
+      <button class="button" type="button" onclick="window.location.href='{% url 'login' %}'">
+        <p style="color: #ffffff;">LOGIN</p>
+      </button>|
+      {% endif %}
+      <button class="button" type="button" onclick="window.location.href='{% url 'myCart' %}'">
+        <p style="color: #ffffff;">
+          <span style="font-size: 18px;">🛒</span>
+          MY CART
+          <span id="cart-count" style="font-size: 14px; color: yellow;">({{ cart_item_count }})</span>
+        </p>
+      </button>
+    </div>
+  </div>
+
+  <!-- SLIDE SHOW -->
+  <div class="container" style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: none;" class="arrow arrow-left"><i class="fas fa-chevron-circle-left"></i></div>
+    <img class="imag" src="{% static 'fastion_app/pic/cover.jpg' %}" alt="" style="width: 95%;">
+    <img class="imag" src="{% static 'fastion_app/pic/cover2.jpg' %}" alt="" style="width: 95%;">
+    <img class="imag" src="{% static 'fastion_app/pic/covkids.jpg' %}" alt="" style="width: 95%;">
+    <div style="display: none;" class="arrow arrow-right"><i class="fas fa-chevron-circle-right"></i></div>
+    <div style="display: none;" class="dots">
+      <div class="dot"><i class="far fa-dot-circle"></i></div>
+      <div class="dot"><i class="far fa-circle"></i></div>
+      <div class="dot"><i class="far fa-circle"></i></div>
+    </div>
+  </div>
+
+  <script>
+    const imgs = document.querySelectorAll(".container img");
+    const dots = document.querySelectorAll(".dot i");
+    const leftArrow = document.querySelector(".arrow-left");
+    const rightArrow = document.querySelector(".arrow-right");
+    let currentIndex = 0;
+    let time = 5000;
+
+    const defClass = (startPos, index) => {
+      for (let i = startPos; i < imgs.length; i++) {
+        imgs[i].style.display = "none";
+        dots[i].classList.remove("fa-dot-circle");
+        dots[i].classList.add("fa-circle");
+      }
+      imgs[index].style.display = "block";
+      dots[index].classList.add("fa-dot-circle");
+    };
+
+    defClass(1, 0);
+
+    leftArrow.addEventListener("click", function() {
+      currentIndex <= 0 ? currentIndex = imgs.length - 1 : currentIndex--;
+      defClass(0, currentIndex);
+    });
+
+    rightArrow.addEventListener("click", function() {
+      currentIndex >= imgs.length - 1 ? currentIndex = 0 : currentIndex++;
+      defClass(0, currentIndex);
+    });
+
+    setInterval(() => {
+      currentIndex >= imgs.length - 1 ? currentIndex = 0 : currentIndex++;
+      defClass(0, currentIndex);
+    }, time);
+  </script>
+
+  <br>
+  <div style="display: flex; justify-content: center;"><p style="height: 30px;">COMFORT . ART . STYLE</p></div>
+  <br>
+  <hr>
+  <div style="display: flex; justify-content: center;"><p style="font-size: 20px; text-decoration: solid;">--------- Top Categories ---------</p></div><br><br>
+<br><br><br>
+  <div class="category-main" id="category-main" style="width: 100%;">
+    <div class="image"><img src="{% static 'fastion_app/pic/womencat.jpg' %}" alt="no img" width="100%"><p>WOMEN</p></div>
+    <div class="image"><img src="{% static 'fastion_app/pic/mencat.jpg' %}" alt="no img" width="100%"><p>MEN</p></div>
+    <div class="image"><img src="{% static 'fastion_app/pic/kidscat.jpg' %}" alt="no img" width="100%"><p>KIDS</p></div>
+    <div class="image"><img src="{% static 'fastion_app/pic/accessories.jpg' %}" alt="no img" width="100%"><p>ACCESSORIES</p></div>
+    <div class="image"><img src="{% static 'fastion_app/pic/salecat.jpg' %}" alt="no img" width="100%"><p>WEDDING</p></div>
+  </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><hr>
+
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div><p style="font-size: 20px; font-style: italic; font-family: Verdana, Geneva, Tahoma, sans-serif; width: 300px; padding-left: 30px;">Story behind the name?</p></div>
+    <div><p>The name RENABELLE means <i>Joyous Beauty</i>. The brand blends cultural heritage with contemporary design, aiming to create clothing that embodies elegance, sophistication, and timeless charm.</p></div>
+  </div>
+  <br><hr><br><br>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 25px 0; background-color: #33303084;">
+    <div style="padding-left: 5%;"><iframe width="560" height="315" src="https://www.youtube.com/embed/CQu4VkZ3Wj4?si=dEHscQZ-5i055O5d" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>
+    <div style="font-size: 45px; padding-right: 10%;  height: 315px; display: flex; align-items: center; justify-content: center;">OUR LATEST SHOW</div>
+  </div>
+  <hr>
+
+  <!-- FOOTER -->
+  <div class="subscribe">
+    <div class="newsletter"><p>JOIN OUR NEWSLETTER</p></div>
+    <form id="newsletter-form">
+      <input 
+        type="email" 
+        id="newsletter-email" 
+        placeholder="Enter email..." 
+        style="width: 300px; height: 35px; margin-left: 40px;"
+        required
+      >
+      <button type="submit" style="display:none">Submit</button>
+    </form>
+    <div id="newsletter-message" style="margin-left:40px; color:red;"></div>
+  </div>
+
+  <div class="footerbox">
+    <div class="footer">
+      <div>
+        <ul type="none">
+          <li class="list-header">CLIENT SERVICES</li>
+          <li><a href="{% url 'contactUs' %}" class="footer-list">Contact Us</a></li>
+          <li><a href="{% url 'appointment' %}" class="footer-list">Book an Appointment</a></li>
+          <li><a href="{% url 'services' %}" class="footer-list">Our Services</a></li>
+          <li><a href="{% url 'faq' %}" class="footer-list">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul type="none">
+          <li class="list-header">LEGAL & PRIVACY</li>
+          <li><a href="{% url 'privacy' %}" class="footer-list">Privacy Policy</a></li>
+          <li><a href="{% url 'cookie' %}" class="footer-list">Cookie Policy</a></li>
+          <li><a href="{% url 'terms' %}" class="footer-list">Website terms of use</a></li>
+          <li><a href="{% url 'code' %}" class="footer-list">Code of conduct</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul type="none">
+          <li class="list-header">CORPORATE</li>
+          <li><a href="{% url 'aboutUs' %}" class="footer-list">About Us</a></li>
+          <li><a href="{% url 'locations' %}" class="footer-list">Store Locations</a></li>
+          <li><a href="{% url 'career' %}" class="footer-list">Career with us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="justify-self: end;">
+      <a href="https://www.facebook.com/BRAC.AARONG"><img class="footer-sns" src="{% static 'fastion_app/pic/fblogo.png' %}" alt="" style=""></a>
+      <a href="https://www.instagram.com/brac.aarong"><img class="footer-sns" src="{% static 'fastion_app/pic/iglogo.webp' %}" alt="" style="" ></a>
+      <a href="https://www.youtube.com/myaarongrewards"><img class="footer-sns" src="{% static 'fastion_app/pic/ytlogo.webp' %}" alt="" style="" ></a>
+    </div>
+  </div>
+  <hr>
+  <div></div>
+  <hr>
+  <div class="credits"><p>© RENABELLE - ALL RIGHTS RESERVED - Renabelle Fashion Official Online Store</p></div>
+
+  <!-- emailjs setup -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init('upa0FgKNBgQZo22Dm'); 
+      
+      const form = document.getElementById('newsletter-form');
+      const emailInput = document.getElementById('newsletter-email');
+      const messageDiv = document.getElementById('newsletter-message');
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic email validation
+        if (!emailInput.value.includes('@')) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        
+        // Send email via EmailJS
+        emailjs.send('service_vy8quug', 'template_otxwryb', {
+          to_email: emailInput.value,
+          from_name: 'Renabelle Fashion'
+        })
+        .then(function() {
+          showMessage('Thank you for subscribing!', 'success');
+          form.reset();
+        }, function(error) {
+          console.error('Failed to send email:', error);
+          showMessage('Subscription failed. Please try again later.', 'error');
+        });
+      });
+      
+      function showMessage(text, type) {
+        messageDiv.textContent = text;
+        messageDiv.style.display = 'block';
+        messageDiv.style.color = type === 'success' ? 'green' : 'red';
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          messageDiv.style.display = 'none';
+        }, 5000);
+      }
+    })();
+  </script>
+
+  <!-- Parallax and fun features -->
+  <script>
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const hero = document.getElementById('parallax-hero');
+      let offset = window.pageYOffset;
+      hero.style.backgroundPositionY = offset * 0.5 + 'px';
+    });
+
+    // Parallax effect for categories
+    window.addEventListener('scroll', function() {
+      const catMain = document.getElementById('category-main');
+      const images = catMain.querySelectorAll('.image');
+      let offset = window.pageYOffset;
+      images.forEach((img, i) => {
+        img.style.transform = translateY(${(i % 2 === 0 ? 1 : -1) * offset * 0.08}px) scale(1.03);
+      });
+    });
+
+    // Floating bubbles for fun
+    function createBubbles() {
+      const bubbles = document.getElementById('bubbles');
+      for (let i = 0; i < 12; i++) {
+        let bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.style.width = bubble.style.height = ${30 + Math.random()*40}px;
+        bubble.style.left = ${Math.random()*90}%;
+        bubble.style.bottom = ${Math.random()*30}px;
+        bubble.style.background = rgba(${200+Math.random()*55},${190+Math.random()*40},${161+Math.random()*40},0.3);
+        bubble.style.animationDelay = ${Math.random()*8}s;
+        bubbles.appendChild(bubble);
+      }
+    }
+    createBubbles();
+
+    // Interactive hover effect for categories
+    document.querySelectorAll('.category-main .image').forEach(function(imgDiv) {
+      imgDiv.addEventListener('mouseenter', function() {
+        imgDiv.style.transform = 'scale(1.08) rotate(-2deg)';
+        imgDiv.style.zIndex = '2';
+        imgDiv.style.boxShadow = '0 8px 32px rgba(212,190,161,0.3)';
+      });
+      imgDiv.addEventListener('mouseleave', function() {
+        imgDiv.style.transform = '';
+        imgDiv.style.zIndex = '';
+        imgDiv.style.boxShadow = '';
+      });
+      imgDiv.addEventListener('click', function() {
+        imgDiv.style.transform = 'scale(1.15) rotate(2deg)';
+        setTimeout(() => { imgDiv.style.transform = ''; }, 400);
+      });
+    });
+
+    // Fun: Animate the "COMFORT . ART . STYLE" text
+    const comfortText = document.querySelector('div > p[style*="height: 30px;"]');
+    if (comfortText) {
+      let words = ["COMFORT", "ART", "STYLE", "JOY", "ELEGANCE"];
+      let idx = 0;
+      setInterval(() => {
+        comfortText.textContent = words[idx % words.length] + " . " + words[(idx+1)%words.length] + " . " + words[(idx+2)%words.length];
+        idx++;
+      }, 1800);
+    }
+  </script>
